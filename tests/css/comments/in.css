@@ -14,11 +14,11 @@ div {
 
     transform: translate(-50%, -50%);
 }
-p {
-    font-family: "/**/", Times, serif;  /* The comment inside double quotes is not a comment! */
+selector {
+    prop: "/**/";  /* The comment inside double quotes is not a comment! */
 }
-a {
-    font-family: '/**/', Times, serif;  /* The comment inside single quotes is not a comment! */
+selector {
+    prop: '/**/';  /* The comment inside single quotes is not a comment! */
 }
 /*
 Ignore this CSS
