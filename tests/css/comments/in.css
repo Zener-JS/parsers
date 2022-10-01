@@ -1,0 +1,29 @@
+/*This is a comment*/
+/*
+This is a multiline comment
+ */
+div {
+    /* Center div */
+    position: absolute;  /* Set Position to absolute */
+    /* Set margin and padding to 0 */
+    margin: 0;
+    padding: 0;
+    /* Set top and left to 50% */
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+}
+p {
+    font-family: "/**/", Times, serif;  /* The comment inside double quotes is not a comment! */
+}
+a {
+    font-family: '/**/', Times, serif;  /* The comment inside single quotes is not a comment! */
+}
+/*
+Ignore this CSS
+
+a {
+    color: black;
+    background-color: white;
+}
