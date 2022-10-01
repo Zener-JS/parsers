@@ -40,15 +40,9 @@ class Parser:
         self.raw_css.replace("\\\"", "__parser__ double-quote")
 
         # Remove comments
-        chr_count = {
-            "\"": 0,
-            "\'": 0
-        }
         while self.raw_css.partition("/*")[1] == "/*":
             partition = list(self.raw_css.partition("/*"))
-            chr_count["\""] = len(partition[0]) - len(partition[0].replace("\"", ""))
-            chr_count["\'"] = len(partition[0]) - len(partition[0].replace("\'", ""))
-            if chr_count["\""] % 2 == chr_count["\'"] % 2 == 0:
+            if (len(partition[0]) - len(partition[0].replace("\"", ""))) % 2 == (len(partition[0]) - len(partition[0].replace("\'", ""))) % 2 == 0:
                 self.raw_css = partition[0] + partition[2].partition("*/")[2]
             else:
                 if partition[1] == "/*":
