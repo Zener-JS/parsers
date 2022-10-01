@@ -36,8 +36,23 @@ class Parser:
         self.raw_css = self.raw_css.replace("\n", "")
 
         # CSS pre parsing
-        self.raw_css.replace("\\\'", "__parser__ single-quote")
-        self.raw_css.replace("\\\"", "__parser__ double-quote")
+        single_quote_str = "__parser__ single-quote"
+        double_quote_str = "__parser__ double-quote"
+        start_comment_str = "__parser__ start_comment"
+        i = 0
+        while single_quote_str in self.raw_css:
+            single_quote_str += str(i)
+            i += 1
+        i = 0
+        while double_quote_str in self.raw_css:
+            double_quote_str += str(i)
+            i += 1
+        i = 0
+        while start_comment_str in self.raw_css:
+            start_comment_str += str(i)
+            i += 1
+        self.raw_css.replace("\\\'", single_quote_str)
+        self.raw_css.replace("\\\"", single_quote_str)
 
         # Remove comments
         while self.raw_css.partition("/*")[1] == "/*":
@@ -46,10 +61,10 @@ class Parser:
                 self.raw_css = partition[0] + partition[2].partition("*/")[2]
             else:
                 if partition[1] == "/*":
-                    partition[1] = "__parser__ start-comment"
+                    partition[1] = start_comment_str
                 self.raw_css = "".join(partition)
-        self.raw_css = self.raw_css.replace("__parser__ start-comment", "/*")
+        self.raw_css = self.raw_css.replace(start_comment_str, "/*")
 
         # CSS post parsing
-        self.raw_css.replace("__parser__ single-quote", "\\\'")
-        self.raw_css.replace("__parser__ double-quote", "\\\"")
+        self.raw_css.replace(single_quote_str, "\\\'")
+        self.raw_css.replace(double_quote_str, "\\\"")
