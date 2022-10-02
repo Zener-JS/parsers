@@ -78,5 +78,29 @@ class Selector:
         return props
 
 
+_current_selectors = []
+
+
+def new_current_selectors(new_selectors: str, test=False):
+    comma_str = "__parser__ comma"
+    i = 0
+    while comma_str in new_selectors:
+        comma_str += str(i)
+        i += 1
+    global _current_selectors
+    _current_selectors = []
+    while new_selectors.partition(",")[1] == ",":
+        partition = new_selectors.partition(",")
+        if (len(partition[0]) - len(partition[0].replace("\"", ""))) % 2 == (len(partition[0]) - len(partition[0].replace("\'", ""))) % 2 == 0:
+            _current_selectors.append(partition[0].strip().replace(comma_str, ","))
+            new_selectors = partition[2]
+        else:
+            new_selectors = f"{partition[0]}{comma_str}{partition[2]}"
+    if new_selectors.strip():
+        _current_selectors.append(new_selectors.strip().replace(comma_str, ","))
+    if test:
+        return _current_selectors
+
+
 def get_configuration():  # For test
     return single_quote_str, double_quote_str

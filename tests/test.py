@@ -2,7 +2,10 @@ import unittest
 
 from src import CSSParser
 from src.css import Selector as CSSSelector
-from src.css.selectors import configure as css_selector_configure, get_configuration as css_get_configuration
+from src.css.selectors import \
+    configure as css_selector_configure, \
+    get_configuration as css_get_configuration,\
+    new_current_selectors as css_new_current_selectors
 
 
 class CSSTest(unittest.TestCase):
@@ -66,6 +69,12 @@ class CSSTest(unittest.TestCase):
         with self.subTest("Test double quote"):
             self.assertEqual("test dq str", current_configuration[1])
         css_selector_configure(original_sq_str, original_dq_str)
+
+    def test_new_current_selectors(self):
+        self.assertEqual(
+            ["#test", ".test", "@test (test: \"test, test\")", "test"],
+            css_new_current_selectors("#test, .test  ,@test (test: \"test, test\"),   test   ", test=True)
+        )
 
 
 if __name__ == '__main__':
