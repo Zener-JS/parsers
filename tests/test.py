@@ -11,7 +11,7 @@ class CSSTest(unittest.TestCase):
     def css_test(self, parent_dir):
         parent_dir = self.parent_dir + parent_dir
         with open(f"{parent_dir}/in.css") as in_css, open(f"{parent_dir}/out.css") as out_css:
-            self.assertEqual(CSSParser(in_css.read()).raw_css, out_css.read().strip("\n"))
+            self.assertEqual(out_css.read().strip("\n"), CSSParser(in_css.read()).raw_css)
 
     def test_comments(self):
         self.css_test("comments")
@@ -36,7 +36,7 @@ class CSSTest(unittest.TestCase):
                 pass
         with self.subTest("Test update_declaration"):
             selector.update_declaration("prop1", "another value")
-            self.assertEqual(selector.get_value_by_prop("prop1"), "another value")
+            self.assertEqual("another value", selector.get_value_by_prop("prop1"))
         with self.subTest("Test prevention of adding new prop with update_declaration"):
             try:
                 selector.update_declaration("A prop that does not exist", "value")
@@ -62,9 +62,9 @@ class CSSTest(unittest.TestCase):
         css_selector_configure("test sq str", "test dq str")
         current_configuration = css_get_configuration()
         with self.subTest("Test single quote"):
-            self.assertEqual(current_configuration[0], "test sq str")
+            self.assertEqual("test sq str", current_configuration[0])
         with self.subTest("Test double quote"):
-            self.assertEqual(current_configuration[1], "test dq str")
+            self.assertEqual("test dq str", current_configuration[1])
         css_selector_configure(original_sq_str, original_dq_str)
 
 
