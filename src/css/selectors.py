@@ -100,5 +100,25 @@ def new_current_selectors(new_selectors: str, test=False):
         return _current_selectors
 
 
+def parse_declarations(declarations_str: str):
+    declarations_str = declarations_str.strip()
+    declarations = {}
+    semicolon_str = "__parser__ semicolon"
+    i = 0
+    while semicolon_str in declarations_str:
+        semicolon_str += str(i)
+        i += 1
+    while declarations_str:
+        partition = declarations_str.partition(";")
+        if (len(partition[0]) - len(partition[0].replace("\"", ""))) % 2 == (
+                len(partition[0]) - len(partition[0].replace("\'", ""))) % 2 == 0:
+            declaration = partition[0].replace(semicolon_str, ";").partition(":")
+            declarations[declaration[0].strip()] = declaration[2].strip()
+            declarations_str = partition[2]
+        else:
+            declarations_str = f"{partition[0]}{semicolon_str}{partition[2]}"
+    return declarations
+
+
 def get_configuration():  # For test
     return single_quote_str, double_quote_str

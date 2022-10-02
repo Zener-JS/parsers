@@ -5,7 +5,8 @@ from src.css import Selector as CSSSelector
 from src.css.selectors import \
     configure as css_selector_configure, \
     get_configuration as css_get_configuration,\
-    new_current_selectors as css_new_current_selectors
+    new_current_selectors as css_new_current_selectors, \
+    parse_declarations as css_parse_declarations
 
 
 class CSSTest(unittest.TestCase):
@@ -75,6 +76,16 @@ class CSSTest(unittest.TestCase):
             ["#test", ".test", "@test (test: \"test, test\")", "test"],
             css_new_current_selectors("#test, .test  ,@test (test: \"test, test\"),   test   ", test=True)
         )
+
+    def test_parse_declaration(self):
+        with open(f"{self.parent_dir}declarations/in.txt") as in_:
+            self.assertEqual(
+                {
+                    "prop1": "value1",
+                    "prop2": "\";value\""
+                },
+                css_parse_declarations(in_.read())
+            )
 
 
 if __name__ == '__main__':
