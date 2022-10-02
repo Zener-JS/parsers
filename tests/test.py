@@ -1,9 +1,9 @@
 import unittest
 from src import CSSParser
+from src.css import Selector as CSSSelector
 
 
 class CSSTest(unittest.TestCase):
-
     parent_dir = "css/"
 
     def css_test(self, parent_dir):
@@ -16,6 +16,44 @@ class CSSTest(unittest.TestCase):
 
     def test_using__parser__(self):
         self.css_test("using __parser__")
+
+    def test_selector(self):
+        selector = CSSSelector("test selector")
+        selector.add_declaration("prop1", "value")
+        selector.add_declaration("prop2", "value")
+        with self.subTest("Test add_declaration, get_value_by_prop and get_props_by_value"):
+            self.assertTrue(
+                selector.get_value_by_prop("prop1") == "value" and
+                selector.get_props_by_value("value") == ["prop1", "prop2"]
+            )
+        with self.subTest("Test prevention of overwrite in add_declaration"):
+            try:
+                selector.add_declaration("prop1", "overwriting value")
+                self.fail("Able to overwrite prop value with add_declaration")
+            except ValueError:
+                pass
+        with self.subTest("Test update_declaration"):
+            selector.update_declaration("prop1", "another value")
+            self.assertEqual(selector.get_value_by_prop("prop1"), "another value")
+        with self.subTest("Test prevention of adding new prop with update_declaration"):
+            try:
+                selector.update_declaration("A prop that does not exist", "value")
+                self.fail("Able to create new prop with update_declaration")
+            except ValueError:
+                pass
+        with self.subTest("Test delete_declaration"):
+            selector.delete_declaration("prop2")
+            try:
+                selector.get_value_by_prop("prop2")
+                self.fail("Prop not deleted")
+            except ValueError:
+                pass
+        with self.subTest("Test checking of whether prop exists or not in delete_declaration"):
+            try:
+                selector.delete_declaration("A prop that does not exist")
+                self.fail("No error raised")
+            except ValueError:
+                pass
 
 
 if __name__ == '__main__':

@@ -24,6 +24,7 @@ SOFTWARE.
 Author(s): Jothin Kumar <contact@jothin.tech>
 GitHub repository: https://github.com/Zener-JS/parsers
 """
+from .selectors import Selector
 
 
 class Parser:
