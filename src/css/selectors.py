@@ -81,7 +81,7 @@ class Selector:
 _current_selectors = []
 
 
-def new_current_selectors(new_selectors: str, test=False):
+def new_current_selectors(new_selectors: str):
     comma_str = "__parser__ comma"
     i = 0
     while comma_str in new_selectors:
@@ -96,8 +96,10 @@ def new_current_selectors(new_selectors: str, test=False):
             new_selectors = partition[2]
         else:
             new_selectors = f"{partition[0]}{comma_str}{partition[2]}"
-    if test:
-        return _current_selectors
+
+
+def get_current_selectors():
+    return _current_selectors
 
 
 def parse_declarations(declarations_str: str):

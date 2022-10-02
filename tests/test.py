@@ -6,7 +6,8 @@ from src.css.selectors import \
     configure as css_selector_configure, \
     get_configuration as css_get_configuration,\
     new_current_selectors as css_new_current_selectors, \
-    parse_declarations as css_parse_declarations
+    parse_declarations as css_parse_declarations, \
+    get_current_selectors as css_get_current_selectors
 
 
 class CSSTest(unittest.TestCase):
@@ -72,9 +73,10 @@ class CSSTest(unittest.TestCase):
         css_selector_configure(original_sq_str, original_dq_str)
 
     def test_new_current_selectors(self):
+        css_new_current_selectors("#test, .test  ,@test (test: \"test, test\"),   test   ")
         self.assertEqual(
             ["#test", ".test", "@test (test: \"test, test\")", "test"],
-            css_new_current_selectors("#test, .test  ,@test (test: \"test, test\"),   test   ", test=True)
+            css_get_current_selectors()
         )
 
     def test_parse_declaration(self):
