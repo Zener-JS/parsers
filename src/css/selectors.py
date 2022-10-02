@@ -24,9 +24,16 @@ SOFTWARE.
 Author(s): Jothin Kumar <contact@jothin.tech>
 GitHub repository: https://github.com/Zener-JS/parsers
 """
-single_quote_str = "__parser__ single-quote"
-double_quote_str = "__parser__ double-quote"
+single_quote_str = ""
+double_quote_str = ""
 selectors = list
+
+
+def configure(new_single_quote_str: str, new_double_quote_str: str):
+    global single_quote_str
+    global double_quote_str
+    single_quote_str = new_single_quote_str
+    double_quote_str = new_double_quote_str
 
 
 def replace__parser__(string: str):
@@ -69,3 +76,7 @@ class Selector:
             if self.declarations[prop] == value:
                 props.append(prop)
         return props
+
+
+def get_configuration():  # For test
+    return single_quote_str, double_quote_str

@@ -1,6 +1,8 @@
 import unittest
+
 from src import CSSParser
 from src.css import Selector as CSSSelector
+from src.css.selectors import configure as css_selector_configure, get_configuration as css_get_configuration
 
 
 class CSSTest(unittest.TestCase):
@@ -54,6 +56,16 @@ class CSSTest(unittest.TestCase):
                 self.fail("No error raised")
             except ValueError:
                 pass
+
+    def test_selectors_configure(self):
+        original_sq_str, original_dq_str = css_get_configuration()
+        css_selector_configure("test sq str", "test dq str")
+        current_configuration = css_get_configuration()
+        with self.subTest("Test single quote"):
+            self.assertEqual(current_configuration[0], "test sq str")
+        with self.subTest("Test double quote"):
+            self.assertEqual(current_configuration[1], "test dq str")
+        css_selector_configure(original_sq_str, original_dq_str)
 
 
 if __name__ == '__main__':

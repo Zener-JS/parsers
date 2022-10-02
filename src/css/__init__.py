@@ -24,7 +24,7 @@ SOFTWARE.
 Author(s): Jothin Kumar <contact@jothin.tech>
 GitHub repository: https://github.com/Zener-JS/parsers
 """
-from .selectors import Selector
+from .selectors import Selector, configure as _selector_configure
 
 
 class Parser:
@@ -48,6 +48,7 @@ class Parser:
         while double_quote_str in self.raw_css:
             double_quote_str += str(i)
             i += 1
+        _selector_configure(single_quote_str, double_quote_str)
         i = 0
         while start_comment_str in self.raw_css:
             start_comment_str += str(i)
