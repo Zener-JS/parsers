@@ -39,7 +39,7 @@ class Parser:
         # CSS pre parsing
         single_quote_str = "__parser__ single-quote"
         double_quote_str = "__parser__ double-quote"
-        start_comment_str = "__parser__ start_comment"
+        start_comment_str = "__parser__ startcomment"
         i = 0
         while single_quote_str in self.raw_css:
             single_quote_str += str(i)
