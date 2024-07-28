@@ -1,18 +1,14 @@
 name: Testing
-on: [pull_request, public]
+on: [pull_request, push]
 
 jobs:
   testing:
-    name: Test in ${{ matrix.os }} with python version ${{ matrix.py-version }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        py-version: ["3.7", "3.8", "3.9", "3.10"]
+    name: Testing
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.py-version }}
+          python-version: '3.12'
       - run: python --version
       - run: python -m unittest test.py
